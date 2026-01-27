@@ -1,0 +1,667 @@
+/* Search Area Container - Red & White Theme */
+.search-area {
+  background: 
+    linear-gradient(135deg, rgba(220, 38, 38, 0.65) 0%, rgba(185, 28, 28, 0.6) 50%, rgba(153, 27, 27, 0.65) 100%),
+    url('../../assets/bgimg.jpeg') center/cover no-repeat;
+  padding: 2.5rem 1rem;
+  color: white;
+  position: relative;
+  overflow: visible; /* CHANGED: Allow dropdown to overflow */
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.search-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* Titles */
+.search-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  color: white;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.search-subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Search Form */
+.search-form {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+/* Search Rows */
+.search-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.search-row.first-row {
+  margin-bottom: 1rem;
+}
+
+.search-row.second-row {
+  margin-bottom: 0;
+}
+
+/* Search Field Base Styles - Red & White Theme */
+.search-field {
+  position: relative;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 12px;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid #fecaca;
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.2);
+}
+
+/* Guest field needs higher stacking context */
+.guest-field {
+  z-index: 100; /* Higher stacking context for dropdown */
+}
+
+.search-field:hover {
+  border-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(220, 38, 38, 0.3);
+}
+
+.search-field:focus-within {
+  border-color: #b91c1c;
+  box-shadow: 0 8px 30px rgba(185, 28, 28, 0.4);
+}
+
+/* Destination Field (First Row) */
+.destination-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-right: 4rem;
+}
+
+/* Date & Guest Fields (Second Row) */
+.date-field, .guest-field {
+  flex: 1;
+}
+
+/* Field Icon - Red Theme */
+.field-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #dc2626;
+  font-size: 1.1rem;
+  z-index: 1;
+}
+
+/* Input Styles */
+.search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #1f2937;
+  font-size: 1rem;
+  padding-top: 1.2rem;
+  padding-left: 2.5rem;
+  outline: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+  font-weight: normal;
+}
+
+/* Date Input Styling */
+/* Date Input Styling - FIXED VERSION */
+.date-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 20; /* Higher than other elements */
+  opacity: 0; /* Invisible but clickable */
+  font-size: 16px; /* Prevents iOS zoom */
+  min-height: 44px; /* Minimum touch target for mobile */
+}
+
+/* For Webkit browsers (Chrome, Safari, Edge) */
+.date-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: transparent;
+  color: transparent;
+}
+
+/* For Firefox */
+.date-input::-moz-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: transparent;
+}
+
+/* For Edge */
+.date-input::-ms-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: transparent;
+  color: transparent;
+}
+
+/* Field Labels - Red Theme */
+.field-label {
+  position: absolute;
+  top: 0.5rem;
+  left: 2.5rem;
+  font-size: 0.75rem;
+  color: #dc2626;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.search-field:focus-within .field-label {
+  color: #b91c1c;
+}
+
+/* Date Display */
+/* Date Display - Make sure it's below the input */
+.date-display {
+  position: absolute;
+  top: 50%;
+  left: 2.5rem;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #1f2937;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  pointer-events: none; /* Don't block clicks */
+  z-index: 5; /* Below the date input */
+}
+
+/* Guest Summary */
+.guest-summary {
+  padding-left: 2.5rem;
+  padding-top: 0.5rem;
+}
+
+.guest-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.guest-stat {
+  font-size: 0.9rem;
+  color: #1f2937;
+  background: #fee2e2;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  border: 1px solid #fecaca;
+  font-weight: 500;
+}
+
+.guest-stat strong {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* Search Icon Button - Red Theme */
+.search-icon-btn {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+.search-icon-btn:hover {
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+  background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
+}
+
+.search-icon-btn:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
+/* Guest Dropdown - FIXED: Higher z-index */
+.guest-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 320px;
+  background: white;
+  border-radius: 16px;
+  padding: 0;
+  box-shadow: 0 25px 60px rgba(220, 38, 38, 0.35);
+  z-index: 9999; /* CHANGED: Much higher z-index */
+  animation: slideDownFade 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid #fecaca;
+  overflow: hidden;
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  background: #fef2f2;
+  border-bottom: 2px solid #fee2e2;
+}
+
+.dropdown-header h4 {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.close-dropdown {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #dc2626;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.close-dropdown:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.guest-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #fee2e2;
+}
+
+.guest-option:last-child {
+  border-bottom: none;
+}
+
+.option-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.option-title {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.95rem;
+}
+
+.option-subtitle {
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+/* Guest Counter - Red Theme */
+.guest-counter {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.counter-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #dc2626;
+  background: white;
+  color: #dc2626;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.counter-btn:hover:not(:disabled) {
+  background: #dc2626;
+  color: white;
+  transform: scale(1.1);
+}
+
+.counter-btn:disabled {
+  border-color: #fca5a5;
+  color: #fca5a5;
+  cursor: not-allowed;
+}
+
+.counter-btn:disabled:hover {
+  background: white;
+  transform: none;
+}
+
+.counter-value {
+  min-width: 36px;
+  text-align: center;
+  font-weight: 700;
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+/* Dropdown Footer */
+.dropdown-footer {
+  padding: 1.2rem 1.5rem;
+  background: #fef2f2;
+  border-top: 2px solid #fee2e2;
+}
+
+.guest-done-btn {
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.guest-done-btn:hover {
+  background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
+}
+
+/* Quick Suggestions - FIXED: Lower z-index */
+.quick-suggestions {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 2px solid rgba(254, 202, 202, 0.5);
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 10; /* CHANGED: Lower than guest dropdown */
+}
+
+.suggestions-title {
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.title-icon {
+  font-size: 1.1rem;
+  color: #fecaca;
+}
+
+.suggestions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.8rem;
+}
+
+.suggestion-card {
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(254, 202, 202, 0.6);
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-align: left;
+  backdrop-filter: blur(5px);
+}
+
+.suggestion-card:hover {
+  background: rgba(255, 255, 255, 0.35);
+  border-color: rgba(254, 202, 202, 0.9);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+}
+
+.suggestion-icon {
+  font-size: 1.3rem;
+  width: 40px;
+  height: 40px;
+  background: rgba(254, 226, 226, 0.3);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dc2626;
+}
+
+.suggestion-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestion-city {
+  font-weight: 700;
+  color: white;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.suggestion-country {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .search-container {
+    max-width: 95%;
+  }
+  
+  .search-row {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .search-row.second-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .date-field, .guest-field {
+    flex: 1;
+    min-width: calc(50% - 0.5rem);
+  }
+  
+  .guest-dropdown {
+    width: 300px;
+    right: 0;
+    left: auto;
+  }
+  
+  .suggestions-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .search-area {
+    padding: 2rem 0.5rem;
+    min-height: 450px;
+  }
+  
+  .search-title {
+    font-size: 1.6rem;
+  }
+  
+  .search-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .search-field {
+    padding: 0.7rem 1rem;
+  }
+  
+  .field-icon {
+    left: 1rem;
+    pointer-events: none;
+  }
+  
+  .search-input {
+    padding-left: 2.2rem;
+  }
+  
+  .field-label {
+    left: 2.2rem;
+  }
+  
+  .date-display {
+    left: 2.2rem;
+  }
+  
+  .guest-summary {
+    padding-left: 2.2rem;
+  }
+  
+  .search-icon-btn {
+    width: 38px;
+    height: 38px;
+    right: 0.8rem;
+  }
+  
+  .guest-dropdown {
+    width: 280px;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 9999; /* Keep high z-index on mobile too */
+  }
+  
+  .suggestions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .search-row.second-row {
+    flex-direction: column;
+  }
+  
+  .date-field, .guest-field {
+    min-width: 100%;
+  }
+  
+  .search-title {
+    font-size: 1.4rem;
+  }
+  
+  .search-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .guest-dropdown {
+    width: 260px;
+  }
+  
+  .suggestions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .suggestion-card {
+    justify-content: center;
+  }
+
+  /* When date is selected, update the display style */
+.date-field:has(.date-input:not([value=""])) .date-display {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* Fallback for browsers that don't support :has() */
+@supports not selector(:has(.date-input:not([value=""]))) {
+  .date-input:not([value=""]) + .date-display {
+    color: #dc2626;
+    font-weight: 700;
+  }
+}
+}
