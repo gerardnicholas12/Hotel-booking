@@ -1,6 +1,2 @@
-// postcss.config.js
-export default {
-  plugins: {
-    '@tailwindcss/postcss': {},
-  },
-};
+// postcss.config.js - Not in use
+export default {};
