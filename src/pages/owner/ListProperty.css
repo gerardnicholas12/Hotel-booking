@@ -1,0 +1,186 @@
+/* ===============================
+   PAGE BACKGROUND – SOFT & PREMIUM
+   WHITE • RED • GOLD (RICH BUT CLEAN)
+   =============================== */
+.owner-page {
+  min-height: 100vh;
+  padding: 56px 16px;
+
+  background:
+    /* warm red glow – top left */
+    radial-gradient(
+      circle at 18% 12%,
+      rgba(239, 68, 68, 0.10),
+      transparent 45%
+    ),
+
+    /* gold glow – top right */
+    radial-gradient(
+      circle at 82% 18%,
+      rgba(212, 175, 55, 0.14),
+      transparent 50%
+    ),
+
+    /* red depth – bottom */
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(239, 68, 68, 0.08),
+      transparent 55%
+    ),
+
+    /* champagne wash */
+    linear-gradient(
+      135deg,
+      rgba(212, 175, 55, 0.06),
+      rgba(255, 255, 255, 0.88),
+      rgba(239, 68, 68, 0.05)
+    ),
+
+    /* base */
+    #ffffff;
+}
+
+/* ===============================
+   CONTAINER
+   =============================== */
+.owner-container {
+  max-width: 840px;
+  margin: 0 auto;
+}
+
+/* ===============================
+   HEADER
+   =============================== */
+.owner-header {
+  text-align: center;              /* FIXED */
+  margin-bottom: 52px;
+}
+
+.owner-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+.owner-header p {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #6b7280;
+}
+
+/* ===============================
+   CARD
+   =============================== */
+/* ===============================
+   CARD CONTAINER – PREMIUM SHADOW
+   =============================== */
+.owner-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 32px;
+
+  /* Layered shadow: depth + warmth */
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.08),        /* base depth */
+    0 6px 18px rgba(239, 68, 68, 0.08),     /* soft red glow */
+    0 2px 6px rgba(212, 175, 55, 0.06);     /* subtle gold lift */
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* ===============================
+   CARD HEADINGS
+   =============================== */
+.owner-card h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.card-subtitle {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #6b7280;
+  margin-bottom: 26px;
+}
+
+/* ===============================
+   FORM ELEMENTS
+   =============================== */
+.owner-card input,
+.owner-card textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+
+  margin-bottom: 20px;
+  background: #ffffff;
+}
+
+.owner-card input::placeholder,
+.owner-card textarea::placeholder {
+  color: #9ca3af;
+}
+
+.owner-card input:focus,
+.owner-card textarea:focus {
+  outline: none;
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+/* ===============================
+   PRICING GRID
+   =============================== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 768px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===============================
+   PRIMARY BUTTON
+   =============================== */
+.primary-btn {
+  width: 100%;
+  margin-top: 44px;
+  padding: 16px;
+
+  border-radius: 16px;
+  border: none;
+
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(239, 68, 68, 0.35);
+}
