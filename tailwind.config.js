@@ -1,7 +1,2 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
+// Tailwind CSS configuration - Not in use
+export default {};
