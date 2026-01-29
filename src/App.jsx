@@ -1,3 +1,4 @@
+// App.jsx - ONLY this component
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navibar from "./components/Navibar/Navibar";
@@ -6,9 +7,10 @@ import SearchArea from "./components/Navibar/SearchArea";
 import LoginPage from "./components/Navibar/Login";
 import Signup from "./components/Navibar/Signup";
 import ListProperty from "./pages/owner/ListProperty";
-import { WishlistProvider } from "./components/Navibar/WishList";
 import WishlistPage from "./components/Navibar/WishListPage";
-
+import BookNowPage from "./components/Navibar/BookNowPage";
+import UserProfile from "./components/Navibar/UserProfile";
+import WishlistProvider from "./components/Navibar/WishList";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -25,18 +27,15 @@ const App = () => {
   };
 
   return (
-    <WishlistProvider> {/* WRAP EVERYTHING WITH PROVIDER */}
+    <WishlistProvider>
       <Router>
         <div className="App">
-          {/* NAVBAR ALWAYS VISIBLE */}
           <Navibar
             onLoginClick={handleLoginClick}
             onSignupClick={handleSignupClick}
           />
 
-          {/* ROUTING */}
           <Routes>
-            {/* CLIENT / HOME PAGE */}
             <Route
               path="/"
               element={
@@ -47,20 +46,27 @@ const App = () => {
               }
             />
 
-            {/* OWNER PAGE */}
             <Route
               path="/owner/list-property"
               element={<ListProperty />}
             />
 
-            {/* WISHLIST PAGE - ADD THIS ROUTE */}
             <Route
               path="/wishlist"
               element={<WishlistPage />}
             />
+
+            <Route
+              path="/user-profile"
+              element={<UserProfile />}
+            />
+
+            <Route
+              path="/book-now/:id"
+              element={<BookNowPage />}
+            />
           </Routes>
 
-          {/* LOGIN POPUP */}
           {showLogin && (
             <LoginPage
               onClose={() => setShowLogin(false)}
@@ -71,7 +77,6 @@ const App = () => {
             />
           )}
 
-          {/* SIGNUP POPUP */}
           {showSignup && (
             <Signup
               onClose={() => setShowSignup(false)}
@@ -83,7 +88,7 @@ const App = () => {
           )}
         </div>
       </Router>
-    </WishlistProvider> 
+    </WishlistProvider>
   );
 };
 

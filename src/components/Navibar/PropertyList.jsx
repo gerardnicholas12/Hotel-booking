@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./PropertyList.css";
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FaStar, FaMapMarkerAlt, FaBed, FaBath, FaWifi, FaParking, FaSwimmingPool } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import propertiesData from "./PropertyList.json";
@@ -17,6 +18,8 @@ const PropertyList = () => {
   const [filter, setFilter] = useState("all");
   const [sortBy, setSortBy] = useState("featured");
   const [visibleCount, setVisibleCount] = useState(6);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
   setVisibleCount(6);
@@ -215,7 +218,20 @@ const handleWishlistClick = (property) => {
                     )}
                   </div>
                   
-                  <button className="book-now-btn">
+                  <button 
+                    className="book-now-btn"
+                    onClick={() => {
+                      // Get search data from location state or localStorage
+                      const searchData = location.state || JSON.parse(localStorage.getItem('searchData')) || {};
+                      
+                      navigate(`/book-now/${property.id}`, { 
+                        state: { 
+                          property,
+                          searchData 
+                        } 
+                      });
+                    }}
+                  >
                     {t("bookNow") || "Book Now"}
                   </button>
                 </div>
