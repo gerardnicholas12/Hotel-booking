@@ -1,10 +1,12 @@
 import { useState } from "react";
 import "./SearchArea.css";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaCalendarAlt, FaUserFriends, FaMapMarkerAlt, FaBuilding, FaCity, FaGlobeAmericas, FaLandmark, FaMonument } from "react-icons/fa";
 
 const SearchArea = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useState({
     destination: "",
     checkIn: "",
@@ -13,6 +15,7 @@ const SearchArea = () => {
     adults: 2,
     children: 0,
   });
+  
 
   const [showGuestDropdown, setShowGuestDropdown] = useState(false);
 
@@ -38,10 +41,18 @@ const SearchArea = () => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault();
-    console.log("Searching with parameters:", searchParams);
-    // Submit form logic here
-  };
+  e.preventDefault();
+  
+  // Navigate to PropertyList page with search data
+  navigate('/', { 
+    state: searchParams 
+  });
+  
+  // OR if you want to go directly to a property:
+  // navigate(`/book-now/1`, { 
+  //   state: { searchData: searchParams } 
+  // });
+};
 
   const today = new Date().toISOString().split('T')[0];
 

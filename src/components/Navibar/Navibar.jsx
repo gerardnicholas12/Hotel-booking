@@ -1,15 +1,18 @@
+// Navibar.jsx - ONLY this component
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Navibar.css";
 import brologo from "../../assets/brologo.png";
 import { useTranslation } from "react-i18next";
+import { useWishlist } from './WishList';
+import { FaHeart, FaUser, FaHistory } from 'react-icons/fa';
 
 const Navibar = ({ onLoginClick, onSignupClick }) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
+  const { getWishlistCount } = useWishlist();
 
-  // Set initial language direction
   useEffect(() => {
     const currentLang = i18n.language || "en";
     document.documentElement.lang = currentLang;
@@ -37,7 +40,6 @@ const Navibar = ({ onLoginClick, onSignupClick }) => {
     onSignupClick();
   };
 
-  
   const handleListPropertyClick = () => {
     const isOwnerLoggedIn = localStorage.getItem("ownerAuth") === "true";
 
@@ -48,10 +50,26 @@ const Navibar = ({ onLoginClick, onSignupClick }) => {
     }
   };
 
+  const handleManageAccount = () => {
+    setShowAccountDropdown(false);
+    navigate("/user-profile");
+  };
+
+  const handleMyBookings = () => {
+    setShowAccountDropdown(false);
+    navigate("/user-profile?tab=bookings");
+  };
+
   return (
     <header className="navibar">
       <div className="navibar-left">
-        <img className="navibar-logo" src={brologo} alt="Logo" />
+        <Link to="/">
+          <img 
+            className="navibar-logo" 
+            src={brologo} 
+            alt="Logo" 
+          />
+        </Link>
       </div>
 
       <div className="navibar-right">
@@ -62,8 +80,19 @@ const Navibar = ({ onLoginClick, onSignupClick }) => {
           {t("ListProperty")}
         </button>
 
-        <button className="navibar-btn">{t("My Wishlist")}</button>
-        <button className="navibar-btn">{t("My Booking")}</button>
+        <Link to="/wishlist" className="navibar-btn navibar-wishlist-btn">
+          {t("Wishlist")}
+          {getWishlistCount() > 0 && (
+            <span className="wishlist-count-badge">{getWishlistCount()}</span>
+          )}
+        </Link>
+
+        <button 
+          className="navibar-btn"
+          onClick={handleMyBookings}
+        >
+          {t("My Booking")}
+        </button>
 
         <div className="navibar-dropdown">
           <button
@@ -82,8 +111,17 @@ const Navibar = ({ onLoginClick, onSignupClick }) => {
                 {t("signup")}
               </button>
               <div className="dropdown-divider"></div>
-              <button className="dropdown-item">{t("manage")}</button>
-              <button className="dropdown-item">{t("help")}</button>
+              <button className="dropdown-item" onClick={handleManageAccount}>
+                <FaUser style={{ marginRight: '8px' }} />
+                {t("manage")}
+              </button>
+              <button className="dropdown-item" onClick={handleMyBookings}>
+                <FaHistory style={{ marginRight: '8px' }} />
+                My Bookings
+              </button>
+              <button className="dropdown-item">
+                {t("help")}
+              </button>
             </div>
           )}
         </div>

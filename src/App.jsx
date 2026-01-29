@@ -1,12 +1,16 @@
+// App.jsx - ONLY this component
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import Navibar from "./components/Navibar/Navibar";
 import PropertyList from "./components/Navibar/PropertyList";
 import SearchArea from "./components/Navibar/SearchArea";
 import LoginPage from "./components/Navibar/Login";
 import Signup from "./components/Navibar/Signup";
 import ListProperty from "./pages/owner/ListProperty";
+import WishlistPage from "./components/Navibar/WishListPage";
+import BookNowPage from "./components/Navibar/BookNowPage";
+import UserProfile from "./components/Navibar/UserProfile";
+import WishlistProvider from "./components/Navibar/WishList";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -23,57 +27,68 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <div className="App">
-        {/* NAVBAR ALWAYS VISIBLE */}
-        <Navibar
-          onLoginClick={handleLoginClick}
-          onSignupClick={handleSignupClick}
-        />
-
-        {/* ROUTING */}
-        <Routes>
-          {/* CLIENT / HOME PAGE */}
-          <Route
-            path="/"
-            element={
-              <>
-                <SearchArea />
-                <PropertyList />
-              </>
-            }
+    <WishlistProvider>
+      <Router>
+        <div className="App">
+          <Navibar
+            onLoginClick={handleLoginClick}
+            onSignupClick={handleSignupClick}
           />
 
-          {/* OWNER PAGE */}
-          <Route
-            path="/owner/list-property"
-            element={<ListProperty />}
-          />
-        </Routes>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <SearchArea />
+                  <PropertyList />
+                </>
+              }
+            />
 
-        {/* LOGIN POPUP */}
-        {showLogin && (
-          <LoginPage
-            onClose={() => setShowLogin(false)}
-            onSwitchToSignup={() => {
-              setShowLogin(false);
-              setShowSignup(true);
-            }}
-          />
-        )}
+            <Route
+              path="/owner/list-property"
+              element={<ListProperty />}
+            />
 
-        {/* SIGNUP POPUP */}
-        {showSignup && (
-          <Signup
-            onClose={() => setShowSignup(false)}
-            onSwitchToLogin={() => {
-              setShowSignup(false);
-              setShowLogin(true);
-            }}
-          />
-        )}
-      </div>
-    </Router>
+            <Route
+              path="/wishlist"
+              element={<WishlistPage />}
+            />
+
+            <Route
+              path="/user-profile"
+              element={<UserProfile />}
+            />
+
+            <Route
+              path="/book-now/:id"
+              element={<BookNowPage />}
+            />
+          </Routes>
+
+          {showLogin && (
+            <LoginPage
+              onClose={() => setShowLogin(false)}
+              onSwitchToSignup={() => {
+                setShowLogin(false);
+                setShowSignup(true);
+              }}
+            />
+          )}
+
+          {showSignup && (
+            <Signup
+              onClose={() => setShowSignup(false)}
+              onSwitchToLogin={() => {
+                setShowSignup(false);
+                setShowLogin(true);
+              }}
+            />
+          )}
+        </div>
+      </Router>
+    </WishlistProvider>
   );
 };
 
