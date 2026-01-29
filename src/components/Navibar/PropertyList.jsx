@@ -3,17 +3,24 @@ import "./PropertyList.css";
 import { FaStar, FaMapMarkerAlt, FaBed, FaBath, FaWifi, FaParking, FaSwimmingPool } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import propertiesData from "./PropertyList.json";
+import { useWishlist } from './WishList';
 
 // Sample data - in a real app, this would come from an API
 const initialProperties = [
   ...propertiesData
 ];
 
+
 const PropertyList = () => {
   const { t } = useTranslation();
   const [properties, setProperties] = useState(initialProperties);
   const [filter, setFilter] = useState("all");
   const [sortBy, setSortBy] = useState("featured");
+  const [visibleCount, setVisibleCount] = useState(6);
+
+  useEffect(() => {
+  setVisibleCount(6);
+}, [filter, sortBy]);
 
   // Filter properties based on selected filter
   const filteredProperties = properties.filter(property => {
@@ -21,7 +28,13 @@ const PropertyList = () => {
     if (filter === "featured") return property.featured;
     return property.type.toLowerCase() === filter;
   });
+  const { toggleWishlist, isInWishlist } = useWishlist();
 
+
+  // PropertyList.jsx - Update the handleWishlistClick function
+const handleWishlistClick = (property) => {
+  toggleWishlist(property);
+};
   // Sort properties
   const sortedProperties = [...filteredProperties].sort((a, b) => {
     switch(sortBy) {
@@ -36,6 +49,7 @@ const PropertyList = () => {
         return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
     }
   });
+  const visibleProperties = sortedProperties.slice(0, visibleCount);
 
   const getAmenityIcon = (amenity) => {
     switch(amenity) {
@@ -98,7 +112,7 @@ const PropertyList = () => {
         </div>
 
         <div className="properties-grid">
-          {sortedProperties.map(property => (
+          {visibleProperties.map(property => (
             <div className="property-card" key={property.id}>
               {/* Property Image with Badges */}
               <div className="property-image-container">
@@ -124,9 +138,12 @@ const PropertyList = () => {
                 )}
                 
                 {/* Wishlist Button */}
-                <button className="wishlist-btn">
-                  ♡
+                <button
+                  className="wishlist-btn"
+                  onClick={() => handleWishlistClick(property)}>
+                  {isInWishlist(property.id) ? "❤️" : "♡"}
                 </button>
+
               </div>
 
               {/* Property Info */}
@@ -223,9 +240,16 @@ const PropertyList = () => {
         )}
 
         <div className="load-more-container">
-          <button className="load-more-btn">
-            {t("loadMore") || "Load More Properties"}
-          </button>
+          {visibleCount < sortedProperties.length && (
+            <div className="load-more-container">
+              <button
+                className="load-more-btn"
+                onClick={() => setVisibleCount(prev => prev + 6)}
+              >
+                {t("loadMore") || "Load More Properties"}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

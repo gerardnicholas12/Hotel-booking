@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // ADD Link HERE!
 import "./Navibar.css";
 import brologo from "../../assets/brologo.png";
 import { useTranslation } from "react-i18next";
+import { useWishlist } from './WishList';
+import { FaHeart } from 'react-icons/fa';
 
 const Navibar = ({ onLoginClick, onSignupClick }) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
+  const { getWishlistCount } = useWishlist(); // MOVE THIS UP
 
   // Set initial language direction
   useEffect(() => {
@@ -37,7 +40,6 @@ const Navibar = ({ onLoginClick, onSignupClick }) => {
     onSignupClick();
   };
 
-  
   const handleListPropertyClick = () => {
     const isOwnerLoggedIn = localStorage.getItem("ownerAuth") === "true";
 
@@ -48,10 +50,18 @@ const Navibar = ({ onLoginClick, onSignupClick }) => {
     }
   };
 
+  // Also update the "My Wishlist" button to be a Link
+  const handleWishlistClick = () => {
+    navigate("/wishlist");
+  };
+
   return (
     <header className="navibar">
       <div className="navibar-left">
-        <img className="navibar-logo" src={brologo} alt="Logo" />
+        <Link to="/">
+          <img className="navibar-logo" src={brologo} alt="Logo" 
+          onClick={() => navigate("/")}/>
+        </Link>
       </div>
 
       <div className="navibar-right">
@@ -62,7 +72,13 @@ const Navibar = ({ onLoginClick, onSignupClick }) => {
           {t("ListProperty")}
         </button>
 
-        <button className="navibar-btn">{t("My Wishlist")}</button>
+        <Link to="/wishlist" className="navibar-btn">
+          {t("My Wishlist")}
+          {getWishlistCount() > 0 && (
+            <span className="wishlist-count-badge">{getWishlistCount()}</span>
+          )}
+        </Link>
+
         <button className="navibar-btn">{t("My Booking")}</button>
 
         <div className="navibar-dropdown">
