@@ -7,10 +7,12 @@ import {
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import './WishList.css';
+import { useNavigate } from 'react-router-dom';
 
 const WishlistPage = () => {
   const { wishlist, removeFromWishlist, clearWishlist, getWishlistCount } = useWishlist();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   // Group by property type
   const groupedWishlist = wishlist.reduce((acc, property) => {
@@ -159,7 +161,11 @@ const WishlistPage = () => {
                       </div>
                       
                       <div className="item-actions">
-                        <button className="book-btn">
+                        <button className="book-btn"
+                          onClick={() => navigate(`/book-now/${property.id}`, { 
+                            state: { property } 
+                          })}
+                        >
                           <FaShoppingCart /> {t('Book Now')}
                         </button>
                         <button 

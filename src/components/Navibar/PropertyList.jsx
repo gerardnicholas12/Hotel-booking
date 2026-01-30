@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./PropertyList.css";
+import { useNavigate } from 'react-router-dom';
 import { FaStar, FaMapMarkerAlt, FaBed, FaBath, FaWifi, FaParking, FaSwimmingPool } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import propertiesData from "./PropertyList.json";
@@ -13,6 +14,7 @@ const initialProperties = [
 
 const PropertyList = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [properties, setProperties] = useState(initialProperties);
   const [filter, setFilter] = useState("all");
   const [sortBy, setSortBy] = useState("featured");
@@ -215,7 +217,12 @@ const handleWishlistClick = (property) => {
                     )}
                   </div>
                   
-                  <button className="book-now-btn">
+                  <button 
+                    className="book-now-btn"
+                    onClick={() => navigate(`/book-now/${property.id}`, { 
+                      state: { property } 
+                    })}
+                  >
                     {t("bookNow") || "Book Now"}
                   </button>
                 </div>

@@ -6,10 +6,11 @@
   padding: 2.5rem 1rem;
   color: white;
   position: relative;
-  overflow: visible; /* CHANGED: Allow dropdown to overflow */
+  overflow: visible;
   min-height: 500px;
   display: flex;
   align-items: center;
+  z-index: 10; /* UPDATED: Lower than navbar (2000) */
 }
 
 .search-container {
@@ -75,7 +76,7 @@
 
 /* Guest field needs higher stacking context */
 .guest-field {
-  z-index: 100; /* Higher stacking context for dropdown */
+  z-index: 1500; /* UPDATED: Below navbar (2000) but above other search elements */
 }
 
 .search-field:hover {
@@ -132,7 +133,6 @@
   font-weight: normal;
 }
 
-/* Date Input Styling */
 /* Date Input Styling - FIXED VERSION */
 .date-input {
   position: absolute;
@@ -141,10 +141,10 @@
   width: 100%;
   height: 100%;
   cursor: pointer;
-  z-index: 20; /* Higher than other elements */
-  opacity: 0; /* Invisible but clickable */
-  font-size: 16px; /* Prevents iOS zoom */
-  min-height: 44px; /* Minimum touch target for mobile */
+  z-index: 20;
+  opacity: 0;
+  font-size: 16px;
+  min-height: 44px;
 }
 
 /* For Webkit browsers (Chrome, Safari, Edge) */
@@ -206,7 +206,6 @@
 }
 
 /* Date Display */
-/* Date Display - Make sure it's below the input */
 .date-display {
   position: absolute;
   top: 50%;
@@ -216,8 +215,8 @@
   color: #1f2937;
   font-weight: 600;
   margin-top: 0.5rem;
-  pointer-events: none; /* Don't block clicks */
-  z-index: 5; /* Below the date input */
+  pointer-events: none;
+  z-index: 5;
 }
 
 /* Guest Summary */
@@ -277,7 +276,7 @@
   transform: translateY(-50%) scale(0.98);
 }
 
-/* Guest Dropdown - FIXED: Higher z-index */
+/* Guest Dropdown - FIXED: Proper z-index hierarchy */
 .guest-dropdown {
   position: absolute;
   top: calc(100% + 10px);
@@ -287,7 +286,7 @@
   border-radius: 16px;
   padding: 0;
   box-shadow: 0 25px 60px rgba(220, 38, 38, 0.35);
-  z-index: 9999; /* CHANGED: Much higher z-index */
+  z-index: 1501; /* UPDATED: Below navbar dropdown (2001) but above search area */
   animation: slideDownFade 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid #fecaca;
   overflow: hidden;
@@ -455,7 +454,7 @@
   border: 2px solid rgba(254, 202, 202, 0.5);
   margin-top: 1.5rem;
   position: relative;
-  z-index: 10; /* CHANGED: Lower than guest dropdown */
+  z-index: 1; /* UPDATED: Lowest in the hierarchy */
 }
 
 .suggestions-title {
@@ -530,6 +529,20 @@
   font-size: 0.8rem;
   margin-top: 0.2rem;
   font-weight: 500;
+}
+
+/* When date is selected, update the display style */
+.date-field:has(.date-input:not([value=""])) .date-display {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* Fallback for browsers that don't support :has() */
+@supports not selector(:has(.date-input:not([value=""]))) {
+  .date-input:not([value=""]) + .date-display {
+    color: #dc2626;
+    font-weight: 700;
+  }
 }
 
 /* Responsive Design */
@@ -613,7 +626,7 @@
     width: 280px;
     right: 50%;
     transform: translateX(50%);
-    z-index: 9999; /* Keep high z-index on mobile too */
+    z-index: 1501; /* Keep proper z-index on mobile */
   }
   
   .suggestions-grid {
@@ -650,18 +663,4 @@
   .suggestion-card {
     justify-content: center;
   }
-
-  /* When date is selected, update the display style */
-.date-field:has(.date-input:not([value=""])) .date-display {
-  color: #dc2626;
-  font-weight: 700;
-}
-
-/* Fallback for browsers that don't support :has() */
-@supports not selector(:has(.date-input:not([value=""]))) {
-  .date-input:not([value=""]) + .date-display {
-    color: #dc2626;
-    font-weight: 700;
-  }
-}
 }

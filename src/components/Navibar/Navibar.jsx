@@ -4,7 +4,7 @@ import "./Navibar.css";
 import brologo from "../../assets/brologo.png";
 import { useTranslation } from "react-i18next";
 import { useWishlist } from './WishList';
-import { FaHeart } from 'react-icons/fa';
+
 
 const Navibar = ({ onLoginClick, onSignupClick }) => {
   const { t, i18n } = useTranslation();
@@ -50,6 +50,40 @@ const Navibar = ({ onLoginClick, onSignupClick }) => {
     }
   };
 
+const handleManageAccountClick = () => {
+  setShowAccountDropdown(false);
+  
+  console.log("=== DEBUG: Checking localStorage ===");
+  console.log("All localStorage items:");
+  
+  // Log ALL localStorage items
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    console.log(`${key}: ${localStorage.getItem(key)}`);
+  }
+  
+  // Check both possible auth keys
+  const userAuth = localStorage.getItem("userAuth");
+  const ownerAuth = localStorage.getItem("ownerAuth");
+  const userToken = localStorage.getItem("userToken"); // Check this too!
+  
+  console.log("Auth values:", { userAuth, ownerAuth, userToken });
+  
+  // Try multiple auth checks
+  const isUserLoggedIn = userAuth === "true" || 
+                         ownerAuth === "true" || 
+                         userToken !== null;
+  
+  console.log("Is user logged in?", isUserLoggedIn);
+  
+  if (isUserLoggedIn) {
+    navigate("/user-profile");
+  } else {
+    console.log("Not logged in, showing login modal");
+    onLoginClick();
+  }
+};
+
   // Also update the "My Wishlist" button to be a Link
   const handleWishlistClick = () => {
     navigate("/wishlist");
@@ -72,14 +106,14 @@ const Navibar = ({ onLoginClick, onSignupClick }) => {
           {t("ListProperty")}
         </button>
 
-        <Link to="/wishlist" className="navibar-btn">
-          {t("My Wishlist")}
-          {getWishlistCount() > 0 && (
-            <span className="wishlist-count-badge">{getWishlistCount()}</span>
-          )}
-        </Link>
+        <Link to="/wishlist" className="navibar-btn wishlist-button">
+  {t("My Wishlist")}
+  {getWishlistCount() > 0 && (
+    <span className="wishlist-count-badge">{getWishlistCount()}</span>
+  )}
+</Link>
 
-        <button className="navibar-btn">{t("My Booking")}</button>
+        <Link to="/my-bookings" className="navibar-btn">{t("My Booking")}</Link>
 
         <div className="navibar-dropdown">
           <button
@@ -98,7 +132,7 @@ const Navibar = ({ onLoginClick, onSignupClick }) => {
                 {t("signup")}
               </button>
               <div className="dropdown-divider"></div>
-              <button className="dropdown-item">{t("manage")}</button>
+              <button className="dropdown-item" onClick={handleManageAccountClick}>{t("manage")}</button>
               <button className="dropdown-item">{t("help")}</button>
             </div>
           )}
